@@ -7,38 +7,6 @@
 
 import Foundation
 
-/*protocol ItemModel{
-    var Name: String{get set}
-    var Price: Float{get set}
-    var CountryOfOrigin: String{get set}
-    var DateOfPackaging: String{get set}
-    var Description: String{get set}
-}
-
-struct Product : ItemModel
-{
-    var Name: String
-    var Price: Float
-    var CountryOfOrigin: String
-    var DateOfPackaging: String
-    var Description: String
-    var ExpirationDate: String
-    var Amount: Int
-    var Unit: String
-}
-
-struct Book : ItemModel
-{
-    var Name: String
-    var Price: Float
-    var CountryOfOrigin: String
-    var DateOfPackaging: String
-    var Description: String
-    var NumberOfPages: Int
-    var PublishingHouse: String
-    var Authors: String
-}*/
-
 class ItemModel: Identifiable, ObservableObject{
     init(){
         self.Name = "None";
