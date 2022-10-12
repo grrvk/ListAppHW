@@ -15,11 +15,13 @@ class ItemModel: Identifiable, ObservableObject{
         self.DateOfPackaging = "None"
         self.Description = "None"
         self.ttype = -1
+        self.PackageDate = Date.now
     }
     func setBaseInfo(name: String, type: Int){
         Name = name
         ttype = type
     }
+    var PackageDate: Date
     var Name: String
     var Price: Float
     var CountryOfOrigin: String
@@ -39,16 +41,20 @@ class Book: ItemModel{
     var PublishingHouse: String
     var Authors: String
     var type: Int
-    func setBook(price: String, country: String, dateP: String, description: String, number: String, house: String, authors: String){
+    func setBook(price: String, country: String, description: String, number: String, house: String, authors: String, PackageDate: Date, baseDate: Date){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.YY"
+        let packDate = formatter.string(from: PackageDate)
+        let basDate = formatter.string(from: baseDate)
+        if (basDate != packDate){
+            DateOfPackaging = packDate
+        }
         if (price != ""){
             let priceConv = (price as NSString).floatValue
             Price = priceConv
         }
         if (country != ""){
             CountryOfOrigin = country
-        }
-        if (dateP != ""){
-            DateOfPackaging = dateP
         }
         if (description != ""){
             Description = description
@@ -72,15 +78,28 @@ class Product: ItemModel{
         self.Amount = 0
         self.Unit = "None"
         self.type = 1
+        self.ExpDate = Date.now
     }
     func returnName() -> String{
         return Name;
     }
+    var ExpDate: Date
     var ExpirationDate: String
     var Amount: Int
     var Unit: String
     var type: Int
-    func setProduct(price: String, country: String, dateP: String, description: String, dateE: String, amount: String, unit: String){
+    func setProduct(price: String, country: String, description: String, amount: String, unit: String, ExpDate: Date, PackageDate: Date, baseDate: Date){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/YY"
+        let expDate = formatter.string(from: ExpDate)
+        let basDate = formatter.string(from: baseDate)
+        if (basDate != expDate){
+            ExpirationDate =  expDate
+        }
+        let packDate = formatter.string(from: PackageDate)
+        if (basDate != packDate){
+            DateOfPackaging = packDate
+        }
         if (price != ""){
             let priceConv = (price as NSString).floatValue
             Price = priceConv
@@ -88,14 +107,8 @@ class Product: ItemModel{
         if (country != ""){
             CountryOfOrigin = country
         }
-        if (dateP != ""){
-            DateOfPackaging = dateP
-        }
         if (description != ""){
             Description = description
-        }
-        if (dateE != ""){
-            ExpirationDate =  dateE
         }
         if (amount != ""){
             let amountConv = (amount as NSString).integerValue
